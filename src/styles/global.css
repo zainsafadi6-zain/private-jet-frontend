@@ -606,3 +606,37 @@ a{
     grid-template-columns:1fr;
   }
 }
+.admin-form{
+  background:#0d0d0d;
+  border:1px solid #242424;
+  padding:30px;
+  border-radius:12px;
+  margin-bottom:35px;
+}
+
+.admin-form h2{
+  font-weight:300;
+  margin-bottom:25px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  margin-bottom:25px;
+}
+
+.form-grid input,
+.form-grid select{
+  height:52px;
+  background:#101010;
+  color:white;
+  border:1px solid #262626;
+  padding:0 15px;
+}
+
+@media(max-width:900px){
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+}

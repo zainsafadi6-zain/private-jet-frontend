@@ -2,11 +2,61 @@ import { useState } from "react";
 import { jets } from "../../data/jets";
 
 function AdminJets() {
+  const [fleet, setFleet] = useState(jets);
   const [search, setSearch] = useState("");
+  const [showForm, setShowForm] = useState(false);
 
-  const filteredJets = jets.filter((jet) =>
+  const [formData, setFormData] = useState({
+    name: "",
+    category: "Light",
+    owner: "EliteJet",
+    seats: "",
+    speed: "",
+    range: "",
+    price: "",
+  });
+
+  const filteredJets = fleet.filter((jet) =>
     jet.name.toLowerCase().includes(search.toLowerCase())
   );
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const addJet = (e) => {
+    e.preventDefault();
+
+    const newJet = {
+      id: Date.now(),
+      ...formData,
+      seats: Number(formData.seats),
+      speed: Number(formData.speed),
+      price: Number(formData.price),
+      image: jets[0].image,
+      description: "New aircraft added by admin.",
+    };
+
+    setFleet([newJet, ...fleet]);
+    setShowForm(false);
+
+    setFormData({
+      name: "",
+      category: "Light",
+      owner: "EliteJet",
+      seats: "",
+      speed: "",
+      range: "",
+      price: "",
+    });
+  };
+
+  const deleteJet = (id) => {
+    setFleet(fleet.filter((jet) => jet.id !== id));
+  };
 
   return (
     <main className="admin-page">
@@ -16,8 +66,84 @@ function AdminJets() {
           <h1>Global Fleet</h1>
         </div>
 
-        <button className="gold-btn">+ Add Aircraft</button>
+        <button className="gold-btn" onClick={() => setShowForm(!showForm)}>
+          {showForm ? "Close Form" : "+ Add Aircraft"}
+        </button>
       </div>
+
+      {showForm && (
+        <form className="admin-form" onSubmit={addJet}>
+          <h2>Add New Aircraft</h2>
+
+          <div className="form-grid">
+            <input
+              name="name"
+              placeholder="Aircraft Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+            >
+              <option>Light</option>
+              <option>Midsize</option>
+              <option>Heavy</option>
+              <option>Ultra-Long-Range</option>
+            </select>
+
+            <input
+              name="owner"
+              placeholder="Owner"
+              value={formData.owner}
+              onChange={handleChange}
+              required
+            />
+
+            <input
+              name="seats"
+              type="number"
+              placeholder="Seats"
+              value={formData.seats}
+              onChange={handleChange}
+              required
+            />
+
+            <input
+              name="speed"
+              type="number"
+              placeholder="Speed"
+              value={formData.speed}
+              onChange={handleChange}
+              required
+            />
+
+            <input
+              name="range"
+              placeholder="Range"
+              value={formData.range}
+              onChange={handleChange}
+              required
+            />
+
+            <input
+              name="price"
+              type="number"
+              placeholder="Price per hour"
+              value={formData.price}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <button className="gold-btn" type="submit">
+            Save Aircraft
+          </button>
+        </form>
+      )}
 
       <input
         className="admin-search"
@@ -54,7 +180,7 @@ function AdminJets() {
               </td>
               <td className="actions">
                 <button>Edit</button>
-                <button>Delete</button>
+                <button onClick={() => deleteJet(jet.id)}>Delete</button>
               </td>
             </tr>
           ))}
