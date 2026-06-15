@@ -541,3 +541,68 @@ a{
   background:#3a1b1b;
   color:#ff7b7b !important;
 }
+.admin-stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:24px;
+  margin-bottom:40px;
+}
+
+.admin-stat-card{
+  background:#0d0d0d;
+  border:1px solid #242424;
+  padding:28px;
+  border-radius:12px;
+}
+
+.admin-stat-card p{
+  color:#aaa;
+  margin-bottom:14px;
+}
+
+.admin-stat-card h2{
+  color:#d4a514;
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+.admin-stat-card span{
+  color:#777;
+}
+
+.admin-dashboard-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:24px;
+}
+
+.admin-panel-box{
+  background:#0d0d0d;
+  border:1px solid #242424;
+  padding:30px;
+  border-radius:12px;
+}
+
+.admin-panel-box h2{
+  font-weight:300;
+  margin-bottom:25px;
+}
+
+.admin-panel-box p,
+.admin-panel-box a{
+  display:block;
+  color:#ddd;
+  padding:14px 0;
+  border-bottom:1px solid #222;
+}
+
+.admin-panel-box a:hover{
+  color:#d4a514;
+}
+
+@media(max-width:1000px){
+  .admin-stats-grid,
+  .admin-dashboard-grid{
+    grid-template-columns:1fr;
+  }
+}

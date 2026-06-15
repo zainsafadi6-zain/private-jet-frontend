@@ -10,6 +10,7 @@ import JetDetails from "./pages/JetDetails.jsx";
 import AdminJets from "./pages/admin/AdminJets.jsx";
 import AdminBookings from "./pages/admin/AdminBookings.jsx";
 import AdminUsers from "./pages/admin/AdminUsers.jsx";
+import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/admin/jets" element={<AdminJets />} />
         <Route path="/admin/bookings" element={<AdminBookings />} />
         <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </>
   );
