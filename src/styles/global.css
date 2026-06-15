@@ -537,3 +537,7 @@ a{
   background:#2b2b2b;
   color:#ccc;
 }
+.status.suspended{
+  background:#3a1b1b;
+  color:#ff7b7b !important;
+}
