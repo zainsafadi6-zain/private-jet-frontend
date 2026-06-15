@@ -849,3 +849,86 @@ a{
     padding:40px 22px;
   }
 }
+
+.client-dashboard{
+  min-height:100vh;
+  padding:140px 60px 60px;
+  background:#050505;
+}
+
+.dashboard-header{
+  margin-bottom:40px;
+}
+
+.dashboard-header h1{
+  font-size:60px;
+  font-weight:300;
+  margin-bottom:12px;
+}
+
+.dashboard-header p{
+  color:#aaa;
+}
+
+.client-stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:24px;
+  margin-bottom:40px;
+}
+
+.client-stat-card{
+  background:#0d0d0d;
+  border:1px solid #242424;
+  padding:28px;
+  border-radius:12px;
+}
+
+.client-stat-card span{
+  color:#aaa;
+}
+
+.client-stat-card h2{
+  color:#d4a514;
+  font-size:44px;
+  margin-top:12px;
+}
+
+.dashboard-panel{
+  background:#0d0d0d;
+  border:1px solid #242424;
+  padding:30px;
+  border-radius:12px;
+}
+
+.dashboard-panel h2{
+  font-weight:300;
+  margin-bottom:25px;
+}
+
+.client-status{
+  padding:7px 13px;
+  border-radius:4px;
+  font-weight:bold;
+}
+
+.client-status.pending{
+  background:#3b2605;
+  color:#d4a514;
+}
+
+.client-status.confirmed{
+  background:#063f24;
+  color:#20e080;
+}
+
+.client-status.completed{
+  background:#1f1f1f;
+  color:#ddd;
+}
+
+@media(max-width:1000px){
+  .client-stats-grid{
+    grid-template-columns:1fr;
+  }
+}
