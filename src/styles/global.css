@@ -494,3 +494,46 @@ a{
   padding:8px 12px;
   cursor:pointer;
 }
+.admin-tools{
+  display:flex;
+  gap:20px;
+  align-items:center;
+  margin-bottom:35px;
+}
+
+.admin-select{
+  width:220px;
+  height:52px;
+  background:#101010;
+  color:white;
+  border:1px solid #262626;
+  padding:0 14px;
+}
+
+.result-count{
+  color:#aaa;
+}
+
+.status-select{
+  height:40px;
+  min-width:140px;
+  border:none;
+  padding:0 12px;
+  font-weight:bold;
+  color:white;
+}
+
+.status-select.pending{
+  background:#3b2605;
+  color:#d4a514;
+}
+
+.status-select.confirmed{
+  background:#063f24;
+  color:#20e080;
+}
+
+.status-select.cancelled{
+  background:#2b2b2b;
+  color:#ccc;
+}

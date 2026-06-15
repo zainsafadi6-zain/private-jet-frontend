@@ -8,6 +8,7 @@ import Register from "./pages/Register.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import JetDetails from "./pages/JetDetails.jsx";
 import AdminJets from "./pages/admin/AdminJets.jsx";
+import AdminBookings from "./pages/admin/AdminBookings.jsx";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
 
         <Route path="/admin/jets" element={<AdminJets />} />
+        <Route path="/admin/bookings" element={<AdminBookings />} />
       </Routes>
     </>
   );
