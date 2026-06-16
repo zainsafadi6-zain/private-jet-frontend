@@ -1,9 +1,41 @@
+import { useEffect, useState } from "react";
+import api from "../../api/axios";
+
 function AdminDashboard() {
+  const [users, setUsers] = useState([]);
+  const [jets, setJets] = useState([]);
+  const [bookings, setBookings] = useState([]);
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const usersRes = await api.get("/auth/users");
+        const jetsRes = await api.get("/jets");
+        const bookingsRes = await api.get("/bookings");
+
+        setUsers(usersRes.data);
+        setJets(jetsRes.data);
+        setBookings(bookingsRes.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
+
+  const pending = bookings.filter((b) => b.status === "Pending").length;
+  const confirmed = bookings.filter((b) => b.status === "Confirmed").length;
+
+  const revenue = bookings.reduce((sum, booking) => {
+    return sum + (booking.totalPrice || 0);
+  }, 0);
+
   const stats = [
-    { title: "Total Users", value: "128", note: "+12 this month" },
-    { title: "Total Jets", value: "24", note: "18 available" },
-    { title: "Total Bookings", value: "356", note: "42 pending" },
-    { title: "Revenue", value: "$1.2M", note: "This quarter" },
+    { title: "Total Users", value: users.length, note: "Registered users" },
+    { title: "Total Jets", value: jets.length, note: "Aircraft in fleet" },
+    { title: "Total Bookings", value: bookings.length, note: `${pending} pending` },
+    { title: "Revenue", value: `$${revenue.toLocaleString()}`, note: `${confirmed} confirmed` },
   ];
 
   return (
@@ -28,9 +60,12 @@ function AdminDashboard() {
       <div className="admin-dashboard-grid">
         <div className="admin-panel-box">
           <h2>Recent Bookings</h2>
-          <p>New York → London</p>
-          <p>Los Angeles → Paris</p>
-          <p>Dubai → Amman</p>
+
+          {bookings.slice(0, 5).map((booking) => (
+            <p key={booking._id}>
+              {booking.departureCity} → {booking.destinationCity} | {booking.status}
+            </p>
+          ))}
         </div>
 
         <div className="admin-panel-box">
