@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
+import fallbackJet from "../assets/jet-2.jpg";
 
 function MyBookings() {
   const [bookings, setBookings] = useState([]);
@@ -24,7 +25,13 @@ function MyBookings() {
       <div className="journey-list">
         {bookings.map((booking) => (
           <div className="journey-card" key={booking._id}>
-            <img src={booking.jet.image} alt={booking.jet.name} />
+        <img
+  src={booking.jet?.image || fallbackJet}
+  alt={booking.jet?.name || "Jet"}
+  onError={(e) => {
+    e.currentTarget.src = fallbackJet;
+  }}
+/>
 
             <div className="journey-info">
               <h2>{booking.jet.name}</h2>

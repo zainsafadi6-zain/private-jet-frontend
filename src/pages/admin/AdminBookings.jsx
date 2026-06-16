@@ -1,50 +1,50 @@
-import { useState } from "react";
-
-const initialBookings = [
-  {
-    id: 1,
-    route: "New York, NY → London, UK",
-    date: "2026-06-10",
-    total: 50000,
-    status: "Confirmed",
-  },
-  {
-    id: 2,
-    route: "Los Angeles, CA → Paris, France",
-    date: "2026-07-01",
-    total: 47200,
-    status: "Pending",
-  },
-  {
-    id: 3,
-    route: "Las Vegas, NV → San Francisco, CA",
-    date: "2026-05-30",
-    total: 11200,
-    status: "Cancelled",
-  },
-];
+import { useEffect, useState } from "react";
+import api from "../../api/axios";
 
 function AdminBookings() {
-  const [bookings, setBookings] = useState(initialBookings);
+  const [bookings, setBookings] = useState([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
 
+  const fetchBookings = async () => {
+    try {
+      const res = await api.get("/bookings");
+      setBookings(res.data);
+    } catch (error) {
+      console.log(error);
+      alert(error.response?.data?.message || "Failed to load bookings");
+    }
+  };
+
+  useEffect(() => {
+    fetchBookings();
+  }, []);
+
   const filteredBookings = bookings.filter((booking) => {
-    const matchSearch = booking.route.toLowerCase().includes(search.toLowerCase());
+    const route = `${booking.departureCity} ${booking.destinationCity}`;
+    const matchSearch = route.toLowerCase().includes(search.toLowerCase());
     const matchFilter = filter === "All" || booking.status === filter;
     return matchSearch && matchFilter;
   });
 
-  const updateStatus = (id, newStatus) => {
-    setBookings(
-      bookings.map((booking) =>
-        booking.id === id ? { ...booking, status: newStatus } : booking
-      )
-    );
+  const updateStatus = async (id, newStatus) => {
+    try {
+      await api.put(`/bookings/${id}/status`, { status: newStatus });
+      fetchBookings();
+    } catch (error) {
+      console.log(error);
+      alert(error.response?.data?.message || "Failed to update status");
+    }
   };
 
-  const deleteBooking = (id) => {
-    setBookings(bookings.filter((booking) => booking.id !== id));
+  const deleteBooking = async (id) => {
+    try {
+      await api.delete(`/bookings/${id}`);
+      fetchBookings();
+    } catch (error) {
+      console.log(error);
+      alert(error.response?.data?.message || "Failed to delete booking");
+    }
   };
 
   return (
@@ -82,7 +82,8 @@ function AdminBookings() {
       <table className="admin-table">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>Client</th>
+            <th>Aircraft</th>
             <th>Route</th>
             <th>Date</th>
             <th>Total</th>
@@ -93,18 +94,21 @@ function AdminBookings() {
 
         <tbody>
           {filteredBookings.map((booking) => (
-            <tr key={booking.id}>
-              <td>#{booking.id}</td>
+            <tr key={booking._id}>
+              <td>{booking.client?.name}</td>
+              <td>{booking.jet?.name}</td>
               <td>
-                <strong>{booking.route}</strong>
+                <strong>
+                  {booking.departureCity} → {booking.destinationCity}
+                </strong>
               </td>
-              <td>{booking.date}</td>
-              <td className="gold">${booking.total.toLocaleString()}</td>
+              <td>{booking.departureDate?.slice(0, 10)}</td>
+              <td className="gold">${booking.totalPrice?.toLocaleString()}</td>
               <td>
                 <select
                   className={`status-select ${booking.status.toLowerCase()}`}
                   value={booking.status}
-                  onChange={(e) => updateStatus(booking.id, e.target.value)}
+                  onChange={(e) => updateStatus(booking._id, e.target.value)}
                 >
                   <option>Pending</option>
                   <option>Confirmed</option>
@@ -112,7 +116,7 @@ function AdminBookings() {
                 </select>
               </td>
               <td className="actions">
-                <button onClick={() => deleteBooking(booking.id)}>Delete</button>
+                <button onClick={() => deleteBooking(booking._id)}>Delete</button>
               </td>
             </tr>
           ))}
