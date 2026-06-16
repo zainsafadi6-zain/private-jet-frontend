@@ -11,6 +11,9 @@ function JetDetails() {
     departureCity: "",
     destinationCity: "",
     departureDate: "",
+    flightTime: "",
+    tripType: "One Way",
+    returnDate: "",
     passengers: 1,
   });
 
@@ -43,6 +46,10 @@ function JetDetails() {
         departureCity: formData.departureCity,
         destinationCity: formData.destinationCity,
         departureDate: formData.departureDate,
+        flightTime: formData.flightTime,
+        tripType: formData.tripType,
+        returnDate:
+          formData.tripType === "Round Trip" ? formData.returnDate : null,
         passengers: Number(formData.passengers),
       });
 
@@ -117,6 +124,34 @@ function JetDetails() {
               onChange={handleChange}
               required
             />
+
+            <input
+              name="flightTime"
+              type="time"
+              value={formData.flightTime}
+              onChange={handleChange}
+              required
+            />
+
+            <select
+              name="tripType"
+              value={formData.tripType}
+              onChange={handleChange}
+              required
+            >
+              <option>One Way</option>
+              <option>Round Trip</option>
+            </select>
+
+            {formData.tripType === "Round Trip" && (
+              <input
+                name="returnDate"
+                type="date"
+                value={formData.returnDate}
+                onChange={handleChange}
+                required
+              />
+            )}
 
             <input
               name="passengers"

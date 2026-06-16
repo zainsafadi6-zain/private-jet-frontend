@@ -34,7 +34,21 @@ function Home() {
             <option>Ultra-Long-Range</option>
           </select>
 
-          <button>✈ SEARCH FLEET</button>
+       <button
+  onClick={() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+    if (!isLoggedIn) {
+      alert("Please sign in or create an account first");
+      navigate("/register");
+      return;
+    }
+
+    navigate("/fleet");
+  }}
+>
+  ✈ SEARCH FLEET
+</button>
         </div>
       </div>
     </section>

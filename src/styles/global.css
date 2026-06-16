@@ -1171,3 +1171,84 @@ a{
   font-size:22px;
   cursor:pointer;
 }
+.journey-card.clickable{
+  cursor:pointer;
+  border-color:#d4a514;
+}
+
+.ticket-page{
+  min-height:100vh;
+  background:#050505;
+  padding:140px 40px 60px;
+  display:flex;
+  justify-content:center;
+}
+
+.ticket-card{
+  width:100%;
+  max-width:1000px;
+  background:#0d0d0d;
+  border:1px solid #d4a514;
+  padding:45px;
+}
+
+.ticket-header{
+  display:flex;
+  justify-content:space-between;
+  border-bottom:1px solid #333;
+  padding-bottom:25px;
+  margin-bottom:35px;
+}
+
+.ticket-header h1{
+  color:#d4a514;
+}
+
+.ticket-header span{
+  color:#aaa;
+  letter-spacing:3px;
+}
+
+.ticket-route{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:40px;
+}
+
+.ticket-route h2{
+  font-size:46px;
+  font-family:Georgia, serif;
+}
+
+.ticket-route span{
+  color:#d4a514;
+  font-size:50px;
+}
+
+.ticket-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:22px;
+}
+
+.ticket-grid div{
+  background:#151515;
+  border:1px solid #292929;
+  padding:20px;
+}
+
+.ticket-grid span{
+  display:block;
+  color:#aaa;
+  margin-bottom:10px;
+}
+
+.ticket-grid strong{
+  color:white;
+}
+
+.ticket-note{
+  margin-top:35px;
+  color:#aaa;
+}
