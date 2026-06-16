@@ -1,6 +1,9 @@
 import heroJet from "../assets/hero-jet.jpg";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
+  
   return (
     <section
       className="hero"
@@ -34,21 +37,22 @@ function Home() {
             <option>Ultra-Long-Range</option>
           </select>
 
-       <button
-  onClick={() => {
-    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            <button
+          className="btn btn-warning"
+          onClick={() => {
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
-    if (!isLoggedIn) {
-      alert("Please sign in or create an account first");
-      navigate("/register");
-      return;
-    }
+            if (!isLoggedIn) {
+              alert("Please sign in or create an account first");
+              navigate("/register");
+              return;
+            }
 
-    navigate("/fleet");
-  }}
->
-  ✈ SEARCH FLEET
-</button>
+            navigate("/fleet");
+          }}
+        >
+          ✈ SEARCH FLEET
+        </button>
         </div>
       </div>
     </section>
