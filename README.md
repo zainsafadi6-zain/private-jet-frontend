@@ -46,7 +46,7 @@ EliteJet is a luxury private jet booking platform developed using React. The fro
 Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone private-jet-frontend
 ```
 
 Install dependencies:
