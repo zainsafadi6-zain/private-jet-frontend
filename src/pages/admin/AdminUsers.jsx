@@ -1,33 +1,24 @@
-import { useState } from "react";
-
-const initialUsers = [
-  {
-    id: 1,
-    name: "John Smith",
-    email: "john@example.com",
-    role: "Client",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "Sarah Johnson",
-    email: "sarah@example.com",
-    role: "Client",
-    status: "Active",
-  },
-  {
-    id: 3,
-    name: "Admin User",
-    email: "admin@elitejet.com",
-    role: "Admin",
-    status: "Active",
-  },
-];
+import { useEffect, useState } from "react";
+import api from "../../api/axios";
 
 function AdminUsers() {
-  const [users, setUsers] = useState(initialUsers);
+  const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("All");
+
+  const fetchUsers = async () => {
+    try {
+      const res = await api.get("/auth/users");
+      setUsers(res.data);
+    } catch (error) {
+      console.log(error);
+      alert(error.response?.data?.message || "Failed to load users");
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   const filteredUsers = users.filter((user) => {
     const matchesSearch =
@@ -35,29 +26,19 @@ function AdminUsers() {
       user.email.toLowerCase().includes(search.toLowerCase());
 
     const matchesRole =
-      roleFilter === "All" || user.role === roleFilter;
+      roleFilter === "All" || user.role.toLowerCase() === roleFilter.toLowerCase();
 
     return matchesSearch && matchesRole;
   });
 
-  const toggleStatus = (id) => {
-    setUsers(
-      users.map((user) =>
-        user.id === id
-          ? {
-              ...user,
-              status:
-                user.status === "Active"
-                  ? "Suspended"
-                  : "Active",
-            }
-          : user
-      )
-    );
-  };
-
-  const deleteUser = (id) => {
-    setUsers(users.filter((user) => user.id !== id));
+  const deleteUser = async (id) => {
+    try {
+      await api.delete(`/auth/users/${id}`);
+      fetchUsers();
+    } catch (error) {
+      console.log(error);
+      alert(error.response?.data?.message || "Failed to delete user");
+    }
   };
 
   return (
@@ -84,9 +65,11 @@ function AdminUsers() {
           onChange={(e) => setRoleFilter(e.target.value)}
         >
           <option>All</option>
-          <option>Client</option>
-          <option>Admin</option>
+          <option>client</option>
+          <option>admin</option>
         </select>
+
+        <span className="result-count">{filteredUsers.length} users</span>
       </div>
 
       <table className="admin-table">
@@ -95,44 +78,28 @@ function AdminUsers() {
             <th>Name</th>
             <th>Email</th>
             <th>Role</th>
-            <th>Status</th>
+            <th>Created</th>
             <th>Actions</th>
           </tr>
         </thead>
 
         <tbody>
           {filteredUsers.map((user) => (
-            <tr key={user.id}>
+            <tr key={user._id}>
               <td>
                 <strong>{user.name}</strong>
               </td>
 
               <td>{user.email}</td>
 
-              <td>{user.role}</td>
-
               <td>
-                <span
-                  className={
-                    user.status === "Active"
-                      ? "status active"
-                      : "status suspended"
-                  }
-                >
-                  {user.status}
-                </span>
+                <span className="status active">{user.role}</span>
               </td>
 
-              <td className="actions">
-                <button onClick={() => toggleStatus(user.id)}>
-                  {user.status === "Active"
-                    ? "Suspend"
-                    : "Activate"}
-                </button>
+              <td>{user.createdAt?.slice(0, 10)}</td>
 
-                <button onClick={() => deleteUser(user.id)}>
-                  Delete
-                </button>
+              <td className="actions">
+                <button onClick={() => deleteUser(user._id)}>Delete</button>
               </td>
             </tr>
           ))}
