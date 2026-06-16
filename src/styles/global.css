@@ -932,3 +932,242 @@ a{
     grid-template-columns:1fr;
   }
 }
+.logout-btn{
+  background:transparent;
+  color:white;
+  border:1px solid #333;
+  padding:12px 24px;
+  cursor:pointer;
+}
+
+.logout-btn:hover{
+  border-color:#d4a514;
+  color:#d4a514;
+}
+
+.logo{
+  text-decoration:none;
+}
+.client-home-page{
+  min-height:100vh;
+  padding:150px 60px 60px;
+  background:#050505;
+}
+
+.client-search-panel{
+  border:1px solid #242424;
+  background:#0b0b0b;
+  padding:50px;
+  max-width:1300px;
+}
+
+.client-search-panel h1{
+  font-family:Georgia, serif;
+  font-size:62px;
+  font-weight:400;
+  margin-bottom:15px;
+}
+
+.client-search-panel p{
+  color:#aaa;
+  font-size:20px;
+  margin-bottom:35px;
+}
+
+.client-flight-search{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 260px;
+  gap:24px;
+}
+
+.client-flight-search input,
+.client-flight-search select{
+  height:70px;
+  background:#151515;
+  border:1px solid #2a2a2a;
+  color:white;
+  padding:0 18px;
+  font-size:18px;
+}
+
+.client-flight-search button{
+  background:#c8a24a;
+  border:none;
+  color:#000;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.client-search-notes{
+  display:flex;
+  gap:35px;
+  margin-top:30px;
+  color:#aaa;
+}
+
+@media(max-width:1000px){
+  .client-flight-search{
+    grid-template-columns:1fr;
+  }
+}
+.client-home-page{
+  min-height:100vh;
+  padding:150px 60px 60px;
+  background:#050505;
+}
+
+.client-search-panel{
+  border:1px solid #242424;
+  background:#0b0b0b;
+  padding:50px;
+  max-width:1300px;
+}
+
+.client-search-panel h1{
+  font-family:Georgia, serif;
+  font-size:62px;
+  font-weight:400;
+  margin-bottom:15px;
+}
+
+.client-search-panel p{
+  color:#aaa;
+  font-size:20px;
+  margin-bottom:35px;
+}
+
+.client-flight-search{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 260px;
+  gap:24px;
+}
+
+.client-flight-search input,
+.client-flight-search select{
+  height:70px;
+  background:#151515;
+  border:1px solid #2a2a2a;
+  color:white;
+  padding:0 18px;
+  font-size:18px;
+}
+
+.client-flight-search button{
+  background:#c8a24a;
+  border:none;
+  color:#000;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.client-search-notes{
+  display:flex;
+  gap:35px;
+  margin-top:30px;
+  color:#aaa;
+}
+
+@media(max-width:1000px){
+  .client-flight-search{
+    grid-template-columns:1fr;
+  }
+}.journeys-page{
+  min-height:100vh;
+  background:#050505;
+  padding:130px 45px 60px;
+}
+
+.journeys-page h1{
+  font-family:Georgia, serif;
+  font-size:70px;
+  font-weight:400;
+  margin-bottom:60px;
+}
+
+.journey-list{
+  display:flex;
+  flex-direction:column;
+  gap:28px;
+}
+
+.journey-card{
+  border:1px solid #242424;
+  background:#0c0c0c;
+  min-height:210px;
+  padding:32px 40px;
+  display:grid;
+  grid-template-columns:220px 1fr 220px;
+  gap:35px;
+  align-items:center;
+}
+
+.journey-card img{
+  width:210px;
+  height:125px;
+  object-fit:cover;
+}
+
+.journey-info h2{
+  font-family:Georgia, serif;
+  font-size:30px;
+  font-weight:400;
+}
+
+.journey-info p{
+  color:#aaa;
+  font-size:20px;
+  margin:10px 0 28px;
+}
+
+.journey-route{
+  display:flex;
+  gap:28px;
+  flex-wrap:wrap;
+  color:#aaa;
+  font-size:18px;
+}
+
+.journey-price{
+  text-align:right;
+}
+
+.journey-status{
+  display:inline-block;
+  padding:8px 18px;
+  font-weight:bold;
+  margin-bottom:25px;
+}
+
+.journey-status.pending{
+  color:#d4a514;
+  background:#3b2605;
+  border:1px solid #6b4308;
+}
+
+.journey-status.cancelled{
+  color:#bbb;
+  background:#2a2a2a;
+}
+
+.journey-price h3{
+  color:#d4a514;
+  font-family:Georgia, serif;
+  font-size:36px;
+  font-weight:400;
+}
+
+.journey-price p{
+  color:#aaa;
+  font-size:18px;
+}
+
+.journey-price button{
+  margin-top:35px;
+  background:transparent;
+  border:none;
+  color:#aaa;
+  font-size:22px;
+  cursor:pointer;
+}

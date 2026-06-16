@@ -13,6 +13,7 @@ import AdminJets from "./pages/admin/AdminJets.jsx";
 import AdminBookings from "./pages/admin/AdminBookings.jsx";
 import AdminUsers from "./pages/admin/AdminUsers.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
+import MyBookings from "./pages/MyBookings.jsx";
 
 function App() {
   return (
@@ -70,6 +71,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+  path="/my-bookings"
+  element={
+    <ProtectedRoute allowedRole="client">
+      <MyBookings />
+    </ProtectedRoute>
+  }
+/>
       </Routes>
     </>
   );

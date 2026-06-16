@@ -1,12 +1,61 @@
-import { useParams } from "react-router-dom";
-import { jets } from "../data/jets";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import api from "../api/axios";
 
 function JetDetails() {
   const { id } = useParams();
-  const jet = jets.find((item) => item.id === Number(id));
+  const navigate = useNavigate();
+
+  const [jet, setJet] = useState(null);
+  const [formData, setFormData] = useState({
+    departureCity: "",
+    destinationCity: "",
+    departureDate: "",
+    passengers: 1,
+  });
+
+  useEffect(() => {
+    const fetchJet = async () => {
+      try {
+        const res = await api.get(`/jets/${id}`);
+        setJet(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchJet();
+  }, [id]);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleBooking = async (e) => {
+    e.preventDefault();
+
+    try {
+      await api.post("/bookings", {
+        jet: jet._id,
+        departureCity: formData.departureCity,
+        destinationCity: formData.destinationCity,
+        departureDate: formData.departureDate,
+        passengers: Number(formData.passengers),
+      });
+
+      alert("Booking request submitted successfully");
+      navigate("/my-bookings");
+    } catch (error) {
+      console.log(error);
+      alert(error.response?.data?.message || "Booking failed");
+    }
+  };
 
   if (!jet) {
-    return <h1 className="not-found">Jet Not Found</h1>;
+    return <h1 className="not-found">Loading jet...</h1>;
   }
 
   return (
@@ -40,15 +89,46 @@ function JetDetails() {
             </div>
           </div>
 
-          <form className="booking-form">
+          <form className="booking-form" onSubmit={handleBooking}>
             <h2>Request Charter</h2>
 
-            <input type="text" placeholder="Departure City" />
-            <input type="text" placeholder="Destination City" />
-            <input type="date" />
-            <input type="number" placeholder="Passengers" min="1" />
+            <input
+              name="departureCity"
+              type="text"
+              placeholder="Departure City"
+              value={formData.departureCity}
+              onChange={handleChange}
+              required
+            />
 
-            <button type="button">Submit Request</button>
+            <input
+              name="destinationCity"
+              type="text"
+              placeholder="Destination City"
+              value={formData.destinationCity}
+              onChange={handleChange}
+              required
+            />
+
+            <input
+              name="departureDate"
+              type="date"
+              value={formData.departureDate}
+              onChange={handleChange}
+              required
+            />
+
+            <input
+              name="passengers"
+              type="number"
+              placeholder="Passengers"
+              min="1"
+              value={formData.passengers}
+              onChange={handleChange}
+              required
+            />
+
+            <button type="submit">Submit Request</button>
           </form>
         </div>
       </div>

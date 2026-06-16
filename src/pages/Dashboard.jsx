@@ -1,88 +1,34 @@
+import { useNavigate } from "react-router-dom";
+
 function Dashboard() {
-  const bookings = [
-    {
-      id: 1,
-      aircraft: "Bombardier Global 7500",
-      route: "Amman → London",
-      date: "2026-07-12",
-      status: "Pending",
-    },
-    {
-      id: 2,
-      aircraft: "Gulfstream G700",
-      route: "Dubai → Paris",
-      date: "2026-08-02",
-      status: "Confirmed",
-    },
-    {
-      id: 3,
-      aircraft: "Embraer Phenom 300E",
-      route: "Amman → Riyadh",
-      date: "2026-06-20",
-      status: "Completed",
-    },
-  ];
+  const navigate = useNavigate();
 
   return (
-    <main className="client-dashboard">
-      <div className="dashboard-header">
-        <p className="section-label">CLIENT PORTAL</p>
-        <h1>My Dashboard</h1>
-        <p>Track your private jet requests and upcoming charter flights.</p>
-      </div>
+    <main className="client-home-page">
+      <section className="client-search-panel">
+        <h1>Welcome to EliteJet</h1>
+        <p>Search for available private aircraft and manage your journeys.</p>
 
-      <div className="client-stats-grid">
-        <div className="client-stat-card">
-          <span>Total Bookings</span>
-          <h2>3</h2>
+        <div className="client-flight-search">
+          <input placeholder="Departure Airport" />
+          <input placeholder="Destination Airport" />
+
+          <select>
+            <option>All Categories</option>
+            <option>Light</option>
+            <option>Midsize</option>
+            <option>Heavy</option>
+            <option>Ultra-Long-Range</option>
+          </select>
+
+          <button onClick={() => navigate("/fleet")}>Search Fleet</button>
         </div>
 
-        <div className="client-stat-card">
-          <span>Pending Flights</span>
-          <h2>1</h2>
+        <div className="client-search-notes">
+          <span>• Jets available now</span>
+          <span>• Worldwide coverage</span>
+          <span>• Instant request</span>
         </div>
-
-        <div className="client-stat-card">
-          <span>Confirmed Flights</span>
-          <h2>1</h2>
-        </div>
-
-        <div className="client-stat-card">
-          <span>Completed Flights</span>
-          <h2>1</h2>
-        </div>
-      </div>
-
-      <section className="dashboard-panel">
-        <h2>My Flight Requests</h2>
-
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>Aircraft</th>
-              <th>Route</th>
-              <th>Date</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {bookings.map((booking) => (
-              <tr key={booking.id}>
-                <td>
-                  <strong>{booking.aircraft}</strong>
-                </td>
-                <td>{booking.route}</td>
-                <td>{booking.date}</td>
-                <td>
-                  <span className={`client-status ${booking.status.toLowerCase()}`}>
-                    {booking.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </section>
     </main>
   );

@@ -1,21 +1,36 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import heroJet from "../assets/hero-jet.jpg";
+import api from "../api/axios";
 
 function Login() {
   const [role, setRole] = useState("client");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    localStorage.setItem("userRole", role);
-    localStorage.setItem("isLoggedIn", "true");
+    try {
+      const res = await api.post("/auth/login", {
+        email,
+        password,
+      });
 
-    if (role === "admin") {
-      navigate("/admin");
-    } else {
-      navigate("/dashboard");
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      localStorage.setItem("userRole", res.data.user.role);
+      localStorage.setItem("isLoggedIn", "true");
+
+      if (res.data.user.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      alert(error.response?.data?.message || "Login failed");
     }
   };
 
@@ -59,10 +74,22 @@ function Login() {
           </div>
 
           <label>EMAIL ADDRESS</label>
-          <input type="email" placeholder="your@email.com" required />
+          <input
+            type="email"
+            placeholder="your@email.com"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
           <label>PASSWORD</label>
-          <input type="password" placeholder="Enter password" required />
+          <input
+            type="password"
+            placeholder="Enter password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
           <button type="submit">Continue</button>
 
